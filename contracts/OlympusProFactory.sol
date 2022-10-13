@@ -7,12 +7,6 @@ import "./OlympusProCustomBond.sol";
 import "./OlympusProCustomTreasury.sol";
 
 contract OlympusProFactory {
-    
-    /**
-     * ===================================================
-     * ----------------- STATE VARIABLE ------------------
-     * ===================================================
-     */
 
     address immutable private olympusProFactoryStorage;
     address immutable private olympusProSubsidyRouter;

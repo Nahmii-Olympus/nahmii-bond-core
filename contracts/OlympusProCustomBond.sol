@@ -23,16 +23,11 @@ contract CustomBond is Ownable {
      * ----------------- LIBRARIES -----------------------
      * ===================================================
      */
-
     using FixedPoint for *;
     using SafeERC20 for IERC20;
     using SafeMath for uint;
     
-    /**
-     * ===================================================
-     * ----------------- EVENTS --------------------------
-     * ===================================================
-     */
+    /* ======== EVENTS ======== */
 
     event BondCreated( uint deposit, uint payout, uint expires );
     event BondRedeemed( address recipient, uint payout, uint remaining );
@@ -40,34 +35,31 @@ contract CustomBond is Ownable {
     event ControlVariableAdjustment( uint initialBCV, uint newBCV, uint adjustment, bool addition );
     
     
-    /**
-     * ===================================================
-     * ----------------- STATE VARIABLE ------------------
-     * ===================================================
-     */
+     /* ======== STATE VARIABLES ======== */
     
-    IERC20 immutable private payoutToken; // token that would be used to pay for the bond (this can be the protocol token)
-    IERC20 immutable private principalToken; // inflow token, in this case, this is the LP token
-    
+    IERC20 immutable payoutToken; // token paid for principal
+    IERC20 immutable principalToken; // inflow token
+    ITreasury immutable customTreasury; // pays for and receives principal
+    address immutable olympusDAO;
+    address olympusTreasury; // receives fee
+
     uint public totalPrincipalBonded;
     uint public totalPayoutGiven;
-    uint public totalDebt; // total value of outstanding bonds; used for pricing
-    uint public lastDecay; // reference block for debt decay
-    uint private payoutSinceLastSubsidy; // principal accrued since subsidy paid
     
     Terms public terms; // stores terms for new bonds
     Adjust public adjustment; // stores adjustment to BCV data
     FeeTiers[] private feeTiers; // stores fee tiers
-
-    bool immutable private feeInPayout;
+    bool private feeInPayout;
 
     mapping( address => Bond ) public bondInfo; // stores bond information for depositors
+
+    uint public totalDebt; // total value of outstanding bonds; used for pricing
+    uint public lastDecay; // reference block for debt decay
+
+    address immutable subsidyRouter; // pays subsidy in OHM to custom treasury
+    uint payoutSinceLastSubsidy; // principal accrued since subsidy paid
     
-    /**
-     * ===================================================
-     * ----------------- STRUCT --------------------------
-     * ===================================================
-     */
+    /* ======== STRUCTS ======== */
 
     struct FeeTiers {
         uint tierCeilings; // principal bonded till next tier
@@ -99,6 +91,7 @@ contract CustomBond is Ownable {
         uint buffer; // minimum length (in blocks) between adjustments
         uint lastBlock; // block when last adjustment made
     }
+    
     
     /* ======== CONSTRUCTOR ======== */
 

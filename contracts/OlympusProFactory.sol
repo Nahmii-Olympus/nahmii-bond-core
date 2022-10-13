@@ -8,12 +8,6 @@ import "./OlympusProCustomTreasury.sol";
 import "./olympus-staking/stake-olympus.sol";
 
 contract OlympusProFactory {
-    
-    /**
-     * ===================================================
-     * ----------------- STATE VARIABLE ------------------
-     * ===================================================
-     */
 
     address immutable private olympusProFactoryStorage;
     address immutable private olympusProSubsidyRouter;

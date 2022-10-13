@@ -21,18 +21,22 @@ contract Staking {
     // mapping of address to struct of the details of the user
     mapping (address => userDetail) UserDetails;
 
-    // Sets the token address 
+    /// @notice Sets the token address 
+    /// @param _stakeToken: This is the token to be staked
     constructor( address _stakeToken) {
         stakeToken = IERC20(_stakeToken);
     }
 
+    /// @notice this function allows admin to add reward to the function 
+   /// @param _amount: this is the amount to tokens to be deposited 
     function addReward( uint _amount)public {
         assert(_amount > 0);
         assert(IERC20(stakeToken).transferFrom(msg.sender, address(this), _amount));
         stakeReward += _amount; 
     }
 
-
+    /// @param _amount: This is the amount of staking token the user want tot stake 
+    /// @notice this function would be used by a user on the bonnd contract to stake token.
     function stake (uint _amount) public {
         userDetail storage usr = UserDetails[msg.sender];
         assert(_amount > 0);
@@ -43,6 +47,8 @@ contract Staking {
         emit Staked(msg.sender, _amount);
     }
 
+    /// @notice this function would calucate the reward the usr can claim
+    /// @param addr: this is the address that is claiming 
     function calculateReward(address addr) 
     public 
     view
@@ -52,7 +58,7 @@ contract Staking {
         _currentReward = (usr.amountStaked * stakeReward * 1e12) / (totalStaked / 1e6); 
     }
 
-
+    /// @notice this function would be used to unstake 
     function withdrawStake () external {
        userDetail storage usr = UserDetails[msg.sender];
        uint releaseTime = usr.stakeTime + 30 days;

@@ -60,6 +60,7 @@ contract Staking {
        assert(block.timestamp >= releaseTime);
        uint calcReward = (calculateReward(msg.sender) / 1e6);
        uint reward = calcReward + usr.amountStaked;
+       totalStaked -= usr.amountStaked;
        usr.amountStaked = 0;
        usr.stakeTime = 0;
        stakeReward -= calcReward;

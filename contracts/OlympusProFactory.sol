@@ -5,6 +5,7 @@ import "./interfaces/IOlympusProFactoryStorage.sol";
 
 import "./OlympusProCustomBond.sol";
 import "./OlympusProCustomTreasury.sol";
+import "./olympus-staking/stake-olympus.sol";
 
 contract OlympusProFactory {
     
@@ -85,9 +86,10 @@ contract OlympusProFactory {
     
         CustomTreasury treasury = new CustomTreasury(_payoutToken, _initialOwner);
         CustomBond bond = new CustomBond(address(treasury), _principalToken, olympusTreasury, olympusProSubsidyRouter, _initialOwner, olympusDAO, _tierCeilings, _fees, _feeInPayout);
+        Staking stakingContract = new Staking(_payoutToken);
         
         return IOlympusProFactoryStorage(olympusProFactoryStorage).pushBond(
-            _principalToken, address(treasury), address(bond), _initialOwner, _tierCeilings, _fees
+            _principalToken, address(treasury), address(bond), address(stakingContract), _initialOwner, _tierCeilings, _fees
         );
     }
 

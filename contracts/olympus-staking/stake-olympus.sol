@@ -23,7 +23,7 @@ contract Staking {
 
     /// @notice Sets the token address 
     /// @param _stakeToken: This is the token to be staked
-    constructor( address _stakeToken) {
+    constructor(address _stakeToken) {
         stakeToken = IERC20(_stakeToken);
     }
 

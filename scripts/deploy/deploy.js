@@ -16,6 +16,8 @@ async function main() {
     const olympusProSubsidyRouter = await OlympusProSubsidyRouter.deploy();
     await olympusProSubsidyRouter.deployed();
     console.log(olympusProSubsidyRouter.address);
+    const ownable = await olympusProSubsidyRouter.policy();
+    console.log("policy address", ownable);
     
     //Deploying the staking Factory
     console.log("Deploying the staking factory")
@@ -47,8 +49,6 @@ async function main() {
     await olympusProSubsidyRouter.transferManagment(olympusDAO);
     await olympusProFactoryStorage.transferManagment(olympusDAO);
     console.log("Transferring Ownership to DAO")
-    await (await olympusProSubsidyRouter.transferManagment(olympusDAO)).wait();
-    await (await olympusProFactoryStorage.transferManagment(olympusDAO)).wait();
 
     console.log("Subsidy Router: " + olympusProSubsidyRouter.address);
     console.log("Olympus Pro Storage: " + olympusProFactoryStorage.address);

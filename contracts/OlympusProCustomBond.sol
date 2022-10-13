@@ -47,7 +47,7 @@ contract CustomBond is Ownable {
      */
     
     IERC20 immutable private payoutToken; // token that would be used to pay for the bond (this can be the protocol token)
-    IERC20 immutable private principalToken; // inflow token
+    IERC20 immutable private principalToken; // inflow token, in this case, this is the LP token
     
     uint public totalPrincipalBonded;
     uint public totalPayoutGiven;
@@ -63,7 +63,11 @@ contract CustomBond is Ownable {
 
     mapping( address => Bond ) public bondInfo; // stores bond information for depositors
     
-    /* ======== STRUCTS ======== */
+    /**
+     * ===================================================
+     * ----------------- STRUCT --------------------------
+     * ===================================================
+     */
 
     struct FeeTiers {
         uint tierCeilings; // principal bonded till next tier

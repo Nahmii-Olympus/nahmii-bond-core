@@ -29,6 +29,7 @@
   "homepage": "https://github.com/OlympusDAO/OlympusPro#readme",
   "devDependencies": {
     "@nomiclabs/hardhat-etherscan": "^3.1.1",
-    "@openzeppelin/contracts": "^4.7.3"
+    "@openzeppelin/contracts": "^4.7.3",
+    "dotenv": "^16.0.1"
   }
 }

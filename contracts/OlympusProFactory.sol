@@ -5,7 +5,7 @@ import "./interfaces/IOlympusProFactoryStorage.sol";
 
 import "./OlympusProCustomBond.sol";
 import "./OlympusProCustomTreasury.sol";
-import "./olympus-staking/stake-olympus.sol";
+import {Staking} from "./olympus-staking/stake-olympus.sol";
 
 contract OlympusProFactory {
 
@@ -82,8 +82,9 @@ contract OlympusProFactory {
         CustomBond bond = new CustomBond(address(treasury), _principalToken, olympusTreasury, olympusProSubsidyRouter, _initialOwner, olympusDAO, _tierCeilings, _fees, _feeInPayout);
         Staking stakingContract = new Staking(_payoutToken);
         
+        
         return IOlympusProFactoryStorage(olympusProFactoryStorage).pushBond(
-            _principalToken, address(treasury), address(bond), address(stakingContract), _initialOwner, _tierCeilings, _fees
+            [_principalToken, address(treasury), address(bond), address(stakingContract), _initialOwner], _tierCeilings, _fees
         );
     }
 
@@ -98,12 +99,12 @@ contract OlympusProFactory {
         @return _treasury address
         @return _bond address
      */
-    function createBond(address _principalToken, address _customTreasury, address _initialOwner, uint[] calldata _tierCeilings, uint[] calldata _fees, bool _feeInPayout ) external onlyDAO() returns(address _treasury, address _bond) {
+    function createBond(address _principalToken, address _customTreasury, address _stakingAddress, address _initialOwner, uint[] calldata _tierCeilings, uint[] calldata _fees, bool _feeInPayout ) external onlyDAO() returns(address _treasury, address _bond) {
 
         CustomBond bond = new CustomBond(_customTreasury, _principalToken, olympusTreasury, olympusProSubsidyRouter, _initialOwner, olympusDAO, _tierCeilings, _fees, _feeInPayout);
 
         return IOlympusProFactoryStorage(olympusProFactoryStorage).pushBond(
-            _principalToken, _customTreasury, address(bond), _initialOwner, _tierCeilings, _fees
+           [_principalToken, _customTreasury, address(bond), _stakingAddress, _initialOwner], _tierCeilings, _fees
         );
     }
     

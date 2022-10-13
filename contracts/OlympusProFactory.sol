@@ -3,6 +3,7 @@ pragma solidity 0.7.5;
 
 import "./interfaces/IOlympusProFactoryStorage.sol";
 
+import "./IOlympusProStakingFactory.sol";
 import "./OlympusProCustomBond.sol";
 import "./OlympusProCustomTreasury.sol";
 import {Staking} from "./olympus-staking/stake-olympus.sol";
@@ -12,9 +13,10 @@ contract OlympusProFactory {
     address immutable private olympusProFactoryStorage;
     address immutable private olympusProSubsidyRouter;
     address immutable public olympusDAO;
+    address public  stakingFactory;
     address public olympusTreasury;
 
-    constructor(address _olympusTreasury, address _olympusProFactoryStorage, address _olympusProSubsidyRouter, address _olympusDAO) {
+    constructor(address _olympusTreasury, address _olympusProFactoryStorage, address _olympusProSubsidyRouter, address _olympusDAO,address _stakingFactory) {
         require( _olympusTreasury != address(0) );
         olympusTreasury = _olympusTreasury;
         require( _olympusProFactoryStorage != address(0) );
@@ -23,6 +25,7 @@ contract OlympusProFactory {
         olympusProSubsidyRouter = _olympusProSubsidyRouter;
         require( _olympusDAO != address(0) );
         olympusDAO = _olympusDAO;
+        stakingFactory = _stakingFactory;
     }
     
 
@@ -42,7 +45,9 @@ contract OlympusProFactory {
         CustomTreasury treasury = new CustomTreasury(_payoutToken, _initialOwner);
         CustomBond bond = new CustomBond(address(treasury), _principalToken, olympusTreasury, olympusProSubsidyRouter, _initialOwner, olympusDAO, _tierCeilings, _fees, _feeInPayout);
         // Staking stakingContract = new Staking(_payoutToken);
-        address stakingContract = address(0);
+        
+        address stakingContract = IStakingFactory(stakingFactory).createNewStake(_payoutToken);
+
         
         
         return IOlympusProFactoryStorage(olympusProFactoryStorage).pushBond(

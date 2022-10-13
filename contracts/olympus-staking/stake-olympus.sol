@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.13;
 
 import "./IERC20.sol";
@@ -33,13 +33,14 @@ contract Staking {
     }
 
 
-    function stake (uint _amount) public {
+    function stake (uint _amount, address addr) public {
         userDetail storage usr = UserDetails[msg.sender];
         assert(_amount > 0);
         assert(usr.amountStaked == 0);
         assert(IERC20(stakeToken).transferFrom(msg.sender, address(this), _amount));
         usr.stakeTime = block.timestamp;
-        usr.amountStaked += _amount;
+        usr.amountStaked = _amount;
+        totalStaked += _amount;
         emit Staked(msg.sender, _amount);
     }
 
@@ -57,10 +58,11 @@ contract Staking {
        userDetail storage usr = UserDetails[msg.sender];
        uint releaseTime = usr.stakeTime + 30 days;
        assert(block.timestamp >= releaseTime);
-       uint reward = (calculateReward(msg.sender) / 1e6) + usr.amountStaked;
+       uint calcReward = (calculateReward(msg.sender) / 1e6);
+       uint reward = calcReward + usr.amountStaked;
        usr.amountStaked = 0;
        usr.stakeTime = 0;
-       stakeReward -= releaseTime;
+       stakeReward -= calcReward;
        IERC20(stakeToken).transfer(msg.sender, reward);
        emit Withdrawn (msg.sender, reward);
     }

@@ -14,30 +14,6 @@ contract OlympusProFactory {
     address immutable public olympusDAO;
     address public olympusTreasury;
 
-
-    /**
-     * ===================================================
-     * ----------------- MODIFIERS -----------------------
-     * ===================================================
-     */
-
-    modifier onlyDAO() {
-        require( olympusDAO == msg.sender, "caller is not the DAO" );
-        _;
-    }
-    
-
-    /**
-     * ===================================================
-     * ----------------- CONSTRUCTION --------------------
-     * ===================================================
-     */
-    
-    /// @notice Here a good number of the state variable were  initailized 
-    /// @param _olympusTreasury: this is the tresure where the fee would be sent to 
-    /// @param _olympusProFactoryStorage: This is the contract that is hanlding the store of the addresses 
-    /// @param _olympusProSubsidyRouter; This is the address on the sudidy router
-    /// @param _olympusDAO: This is the address of the DAO changes done in this contract would be handled by this address.
     constructor(address _olympusTreasury, address _olympusProFactoryStorage, address _olympusProSubsidyRouter, address _olympusDAO) {
         require( _olympusTreasury != address(0) );
         olympusTreasury = _olympusTreasury;
@@ -50,62 +26,27 @@ contract OlympusProFactory {
     }
     
 
-    /**
-     * ===================================================
-     * ----------------- FUNCTIONS -----------------------
-     * ===================================================
-     */
 
-    
-    /**
-        @notice change Olympus Treasury address, Only the olympus Tresury can make this change
-        @param _olympusTreasury address on the new olympus Treasury
-     */
-    function changeTreasuryAddress(address _olympusTreasury) external onlyDAO() {
+    function changeTreasuryAddress(address _olympusTreasury) external {
+        onlyDAO;
         olympusTreasury = _olympusTreasury;
     }
     
-    /**
-        @notice deploys custom treasury and custom bond contracts and returns address of both
-        @param _payoutToken address
-        @param _principalToken address
-        @param _initialOwner address
-        @param _tierCeilings uint[]
-        @param _fees uint[]
-        @param _feeInPayout bool
-        @return _treasury address
-        @return _bond address
-     */
-    function createBondAndTreasury(address _payoutToken, address _principalToken, address _initialOwner, uint[] calldata _tierCeilings, uint[] calldata _fees, bool _feeInPayout) external onlyDAO() returns(address _treasury, address _bond) {
-    
+
+    function onlyDAO() internal view {
+        require( olympusDAO == msg.sender, "caller is not the DAO" );
+    }
+
+    function createBondAndTreasury(address _payoutToken, address _principalToken, address _initialOwner, uint[] calldata _tierCeilings, uint[] calldata _fees, bool _feeInPayout) external returns(address _treasury, address _bond) {
+        onlyDAO;
         CustomTreasury treasury = new CustomTreasury(_payoutToken, _initialOwner);
         CustomBond bond = new CustomBond(address(treasury), _principalToken, olympusTreasury, olympusProSubsidyRouter, _initialOwner, olympusDAO, _tierCeilings, _fees, _feeInPayout);
-        Staking stakingContract = new Staking(_payoutToken);
+        // Staking stakingContract = new Staking(_payoutToken);
+        address stakingContract = address(0);
         
         
         return IOlympusProFactoryStorage(olympusProFactoryStorage).pushBond(
             [_principalToken, address(treasury), address(bond), address(stakingContract), _initialOwner], _tierCeilings, _fees
         );
-    }
-
-    /**
-        @notice deploys custom bond using the a already deployed bond contract
-        @param _principalToken address of the intake token 
-        @param _customTreasury address of the custom  deployed treasury 
-        @param _initialOwner address of the accont to be the owner of this bond 
-        @param _tierCeilings uint[] 
-        @param _fees uint[]
-        @param _feeInPayout bool
-        @return _treasury address
-        @return _bond address
-     */
-    function createBond(address _principalToken, address _customTreasury, address _stakingAddress, address _initialOwner, uint[] calldata _tierCeilings, uint[] calldata _fees, bool _feeInPayout ) external onlyDAO() returns(address _treasury, address _bond) {
-
-        CustomBond bond = new CustomBond(_customTreasury, _principalToken, olympusTreasury, olympusProSubsidyRouter, _initialOwner, olympusDAO, _tierCeilings, _fees, _feeInPayout);
-
-        return IOlympusProFactoryStorage(olympusProFactoryStorage).pushBond(
-           [_principalToken, _customTreasury, address(bond), _stakingAddress, _initialOwner], _tierCeilings, _fees
-        );
-    }
-    
+    }    
 }

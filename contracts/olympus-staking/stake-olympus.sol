@@ -35,14 +35,13 @@ contract Staking {
         stakeReward += _amount; 
     }
 
-<<<<<<< HEAD
 
-    function stake (uint _amount, address addr) public {
-=======
+   
+
     /// @param _amount: This is the amount of staking token the user want tot stake 
     /// @notice this function would be used by a user on the bonnd contract to stake token.
     function stake (uint _amount) public {
->>>>>>> 13026d10a6b21bdaae45f110cd4168db36b8ec86
+
         userDetail storage usr = UserDetails[msg.sender];
         assert(_amount > 0);
         assert(usr.amountStaked == 0);

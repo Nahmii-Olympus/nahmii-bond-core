@@ -16,6 +16,7 @@ contract OlympusProFactoryStorage is Ownable {
         address _principalToken;
         address _treasuryAddress;
         address _bondAddress;
+        address _stakingAddress;
         address _initialOwner;
         uint[] _tierCeilings;
         uint[] _fees;
@@ -37,7 +38,7 @@ contract OlympusProFactoryStorage is Ownable {
      * ===================================================
      */
 
-    event BondCreation(address treasury, address bond, address _initialOwner);
+    event BondCreation(address treasury, address bond, address staking, address _initialOwner);
     
     /**
      * ===================================================
@@ -56,7 +57,7 @@ contract OlympusProFactoryStorage is Ownable {
         @return _treasury address
         @return _bond address
      */
-    function pushBond(address _principalToken, address _customTreasury, address _customBond, address _initialOwner, uint[] calldata _tierCeilings, uint[] calldata _fees) external returns(address _treasury, address _bond) {
+    function pushBond(address _principalToken, address _customTreasury, address _customBond, address _stakingAddress, address _initialOwner, uint[] calldata _tierCeilings, uint[] calldata _fees) external returns(address _treasury, address _bond, address _stake) {
         require(olympusProFactory == msg.sender, "Not Olympus Pro Factory");
 
         indexOfBond[_customBond] = bondDetails.length;
@@ -65,13 +66,14 @@ contract OlympusProFactoryStorage is Ownable {
             _principalToken: _principalToken,
             _treasuryAddress: _customTreasury,
             _bondAddress: _customBond,
+            _stakingAddress: _stakingAddress,
             _initialOwner: _initialOwner,
             _tierCeilings: _tierCeilings,
             _fees: _fees
         }));
 
-        emit BondCreation(_customTreasury, _customBond, _initialOwner);
-        return( _customTreasury, _customBond );
+        emit BondCreation(_customTreasury, _customBond, _stakingAddress, _initialOwner);
+        return( _customTreasury, _customBond, _stakingAddress );
     }
 
     /**

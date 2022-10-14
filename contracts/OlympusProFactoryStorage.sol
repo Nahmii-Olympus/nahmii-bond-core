@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 pragma solidity 0.7.5;
+pragma abicoder v2;
 import "./types/Ownable.sol";
 
 
@@ -72,5 +73,8 @@ contract OlympusProFactoryStorage is Ownable {
     function setFactoryAddress(address _factory) external onlyPolicy() {
         olympusProFactory = _factory;
     }
-    
+
+    function fetchBondDetails() external view returns(BondDetails[] memory details) {
+        details = bondDetails;
+    }
 }

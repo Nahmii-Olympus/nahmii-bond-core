@@ -50,6 +50,34 @@ async function main() {
     console.log("KiwiPrincipalToken Sent");
     console.log("-=----=----=----=----=-");
 
+
+    // BONDII
+    console.log("Sending BondiiPayoutToken");
+    const BondiiPayoutTokenSend = await ethers.getContractAt("BondPayoutToken", BondiiPayoutToken);
+    await (await BondiiPayoutTokenSend.transfer(RecieverAddress, sendAmount)).wait();
+    console.log("BondiiPayoutToken Sent");
+    console.log("-=----=----=----=----=-");
+
+    console.log("Sending BondiiPrincipalToken");
+    const BondiiPrincipalTokenSend = await ethers.getContractAt("BondPrincipalToken", BondiiPrincipalToken);
+    await (await BondiiPrincipalTokenSend.transfer(RecieverAddress, sendAmount)).wait();
+    console.log("BondiiPrincipalToken Sent");
+    console.log("-=----=----=----=----=-");
+
+
+    // FARMII
+    console.log("Sending FarmiiPayoutToken");
+    const FarmiiPayoutTokenSend = await ethers.getContractAt("BondPayoutToken", FarmiiPayoutToken);
+    await (await FarmiiPayoutTokenSend.transfer(RecieverAddress, sendAmount)).wait();
+    console.log("FarmiiPayoutToken Sent");
+    console.log("-=----=----=----=----=-");
+
+    console.log("Sending FarmiiPrincipalToken");
+    const FarmiiPrincipalTokenSend = await ethers.getContractAt("BondPrincipalToken", FarmiiPrincipalToken);
+    await (await FarmiiPrincipalTokenSend.transfer(RecieverAddress, sendAmount)).wait();
+    console.log("FarmiiPrincipalToken Sent");
+    console.log("-=----=----=----=----=-");
+
 }
 
 main()

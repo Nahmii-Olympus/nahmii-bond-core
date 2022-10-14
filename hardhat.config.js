@@ -27,7 +27,7 @@ module.exports = {
   networks: {
     nahmii: {
       url: NAHMII_URL,
-      accounts: [ACCOUNT_PRIVATE_KEY]
+      accounts: [ACCOUNT_PRIVATE_KEY,  ACCOUNTTWO_PRIVATE_KEY]
     },
     goerli: {
       url: ALCHEMY_GOERLI_API_KEY_URL,

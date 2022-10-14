@@ -46,34 +46,23 @@ contract OlympusProFactoryStorage is Ownable {
      * ===================================================
      */
     
-    /**
-        @notice pushes bond details to array, this array is used to track the bonds.
-        @param _principalToken address
-        @param _customTreasury address
-        @param _customBond address
-        @param _initialOwner address
-        @param _tierCeilings uint[]
-        @param _fees uint[]
-        @return _treasury address
-        @return _bond address
-     */
-    function pushBond(address _principalToken, address _customTreasury, address _customBond, address _stakingAddress, address _initialOwner, uint[] calldata _tierCeilings, uint[] calldata _fees) external returns(address _treasury, address _bond, address _stake) {
+    function pushBond(address[5] memory addresses, uint[] calldata _tierCeilings, uint[] calldata _fees) external returns(address _treasury, address _bond, address _stake) {
         require(olympusProFactory == msg.sender, "Not Olympus Pro Factory");
 
-        indexOfBond[_customBond] = bondDetails.length;
+        indexOfBond[addresses[2]] = bondDetails.length;
         
         bondDetails.push( BondDetails({
-            _principalToken: _principalToken,
-            _treasuryAddress: _customTreasury,
-            _bondAddress: _customBond,
-            _stakingAddress: _stakingAddress,
-            _initialOwner: _initialOwner,
+            _principalToken: addresses[0],
+            _treasuryAddress: addresses[1],
+            _bondAddress: addresses[2],
+            _stakingAddress: addresses[3],
+            _initialOwner: addresses[4],
             _tierCeilings: _tierCeilings,
             _fees: _fees
         }));
 
-        emit BondCreation(_customTreasury, _customBond, _stakingAddress, _initialOwner);
-        return( _customTreasury, _customBond, _stakingAddress );
+        emit BondCreation(addresses[1], addresses[2], addresses[3], addresses[0]);
+        return( addresses[1], addresses[2], addresses[3] );
     }
 
     /**

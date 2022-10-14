@@ -1,0 +1,31 @@
+Getting Signers
+Deploying contracts with the account: 0x617cd3DB0CbF26F323D5b72975c5311343e09115
+Stating Addresses
+Deploying Router
+0x56eB6Eeb0777a2053DDDb6d6fF2b47018b49bb93
+policy address 0x617cd3DB0CbF26F323D5b72975c5311343e09115
+Deploying the staking factory
+Staking factory deployed 0x8042f53bF81b2d988F43Fa3BF6b5d69D6e90f06D
+Deploying Storage
+0x4f38dE8ffF08A8842b445E8A6108B9cC5f1c7FD9
+Deploying factory
+0xe19b7C257f2be44F01d432ba2f4579b327Fd55eC
+Setting factory New Owner
+Transferring Ownership to DAO
+Subsidy Router: 0x56eB6Eeb0777a2053DDDb6d6fF2b47018b49bb93
+Olympus Pro Storage: 0x4f38dE8ffF08A8842b445E8A6108B9cC5f1c7FD9
+Olympus Pro Factory: 0xe19b7C257f2be44F01d432ba2f4579b327Fd55eC
+
+olympusDAO: "0x9A062EF7892c4F8bA4Ae09F4AF507f37218e9775"
+olympusTreasury: "0xf8E1d24aD086738fF31D31040967507801377B64"
+
+
+TOKENS
+Kiwi Labs token Payout Contract: 0x5118a1875197aFB7AC1D7711851a71183ADECEE0
+Kiwi Labs token Principal Contract: 0xF7Bb849857e48877f39007BabaC0E4DdC5fD1B5C
+Kiwi token Payout Contract: 0x95bf3239768e61d98B6B89EFe9a2FaBd89f6A644
+Kiwi token Principal Contract: 0x63C27dDcb6C3BB9ccB4247DBa75Ce813955a87DC
+Bondii token Payout Contract: 0x5cf44F9E9dEffDbF1C54fD516F525A0348B56445
+Bondii token Principal Contract: 0x4d219E15bc25866B73221859064cd7E1DA6382A8
+Farmii token Payout Contract: 0xcc2719eb63f692B908F508B2822C5aBB796655a8
+Farmii token Principal Contract: 0x1F61b170E3dF614CCE5a0dC02FF06C15650aC478

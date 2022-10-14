@@ -6,8 +6,8 @@ async function main() {
     const [deployer] = await ethers.getSigners();
     console.log('Deploying contracts with the account: ' + deployer.address);
 
-    const olympusDAO = "0x15fddc0d0397117b46903c1F6c735b55755C2a3a";
-    const olympusTreasury = "0x31F8Cc382c9898b273eff4e0b7626a6987C846E8";
+    const olympusDAO = "0x9A062EF7892c4F8bA4Ae09F4AF507f37218e9775";
+    const olympusTreasury = "0xf8E1d24aD086738fF31D31040967507801377B64";
     console.log("Stating Addresses");
   
     // Deplopy Olympus Pro Subsidy Router

@@ -9,20 +9,20 @@ async function main() {
     const [deployer] = await ethers.getSigners();
     console.log('Signer that would be making changes: ' + deployer.address);
 
-    KiwiLabsPayoutToken = "0x5118a1875197aFB7AC1D7711851a71183ADECEE0";
-    KiwiLabsPrincipalToken = "0xF7Bb849857e48877f39007BabaC0E4DdC5fD1B5C";
+    KiwiLabsPayoutToken = "0xFdc78DA8Bbd584C6f6E14468c77b6f09105CA63f";
+    KiwiLabsPrincipalToken = "0xaDBA987955Eac146f1983062100046be46e632fA";
     
-    KiwiPayoutToken  = "0x95bf3239768e61d98B6B89EFe9a2FaBd89f6A644";
-    KiwiPrincipalToken = "0x63C27dDcb6C3BB9ccB4247DBa75Ce813955a87DC";
+    KiwiPayoutToken  = "0x9e92DE115F6c5a66c77062434Fa4F787Fd32daa9";
+    KiwiPrincipalToken = "0xE9d590484Cf0e68FF30bb5589658CD9B6cEd096f";
     
-    BondiiPayoutToken = "0x5cf44F9E9dEffDbF1C54fD516F525A0348B56445";
-    BondiiPrincipalToken = "0x4d219E15bc25866B73221859064cd7E1DA6382A8";
+    BondiiPayoutToken = "0x0519C43Cdf9B75Ba0a265B3330655A0cAF6D4ED3";
+    BondiiPrincipalToken = "0x1d4657f5dD44ff59E14973862e0749978B74A7c0";
 
-    FarmiiPayoutToken = "0xcc2719eb63f692B908F508B2822C5aBB796655a8";
-    FarmiiPrincipalToken = "0x1F61b170E3dF614CCE5a0dC02FF06C15650aC478";
+    FarmiiPayoutToken = "0xD410219f5C87247d3F109695275A70Da7805f1b1";
+    FarmiiPrincipalToken = "0x5C8f5D80FD653a885832dF5c1f09978C81A8cDC4";
 
     const RecieverAddress = "0x7A3E0DFf9B53fA0d3d1997903A48677399b22ce7";
-    const sendAmount = ethers.utils.parseEther("500");
+    const sendAmount = ethers.utils.parseEther("1000");
 
     // KIWII LABS
     console.log("Sending KiwiLabsPayoutToken");

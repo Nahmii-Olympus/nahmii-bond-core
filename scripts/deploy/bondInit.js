@@ -9,11 +9,11 @@ async function main() {
     const [deployer] = await ethers.getSigners();
     console.log('Signer that would be making changes: ' + deployer.address);
 
-    const BOND_ADDR = "";
+    const BOND_ADDR = "0x814D57e3185DbBfC4E4282384F8365F9c191D13a";
 
 
     console.log("Calling setBond terms");
-    const customBond = ethers.getContractAt("CustomBond", BOND_ADDR);
+    const customBond = await ethers.getContractAt("CustomBond", BOND_ADDR);
 
     await (await customBond.setBondTerms('0', '46200')).wait();
 

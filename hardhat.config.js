@@ -25,14 +25,14 @@ module.exports = {
     ],
   },
   networks: {
-    nahmii: {
-      url: NAHMII_URL,
-      accounts: [ACCOUNT_PRIVATE_KEY]
-    },
-    goerli: {
-      url: ALCHEMY_GOERLI_API_KEY_URL,
-      accounts: [ACCOUNT_PRIVATE_KEY, ACCOUNTTWO_PRIVATE_KEY],
-    }
+    // nahmii: {
+    //   url: NAHMII_URL,
+    //   accounts: [ACCOUNT_PRIVATE_KEY]
+    // },
+    // goerli: {
+    //   url: ALCHEMY_GOERLI_API_KEY_URL,
+    //   accounts: [ACCOUNT_PRIVATE_KEY, ACCOUNTTWO_PRIVATE_KEY],
+    // }
   },
   etherscan: {
     apiKey: API_TOKEN
